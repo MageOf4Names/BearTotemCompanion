@@ -119,18 +119,18 @@ Creates a global session object for the server. The session will track brackets,
 **Attributes:**
 
 - Name (string): Name of the player
-- 3Count (int): Number of games played in a 3 pod that night
+- Threes (int): Number of games played in a 3 pod that night
 - DownCount (int): Number of games played downstairs that night
 
 **Methods:**
 
-
-
+- Seat(bool three, bool down): Sets the player's seated flag to true and increments the threes and/or downCount attributes appropriately based on pod type
 
 ###### Pod Object:
 
 **Attributes:**
 
+- Name (string): The name of the pod (typically a table name)
 - MaxSize (int): The maximum size of the pod (3 or 4)
 - Players (Player[]): The names of the players in the pod
 

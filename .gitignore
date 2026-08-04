@@ -1,1 +1,5 @@
 /.env
+/.beartotemcompanion
+/.vscode
+/*/__pycache__
+/unittests.ps1
