@@ -45,6 +45,12 @@ class Pod:
     def isFull(self) -> bool:
         return len(self.__players) >= self.__maxSize
 
+    def getSize(self) -> int:
+        return self.__maxSize
+
+    def remaining(self) -> int:
+        return self.__maxSize - len(self.__players)
+
     def __str__(self) -> str:
         out = f"{self.name}:\n```\n"
         for p in self.__players:
