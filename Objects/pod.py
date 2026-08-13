@@ -2,8 +2,8 @@
 File: pod.py
 Brief: Class outline for the pod object used in Bear Totem Companion
 Author: Brandon Dennis
-Version: 0.0.0
-Last updated: 8/4/2026
+Version: 0.1.0
+Last updated: 8/11/2026
 TODO:
 """
 
@@ -24,13 +24,29 @@ Creates a pod of a given name and size, adds players to the table, and utilize
 """
 class Pod:
     def __init__(self, name:str, size:int=4):
-        self.name = name
-        self.__maxSize = size
-        self.__players = []
+        self.name:str = name
+        self.__maxSize:int = size
+        self.__players:list[Player] = []
+
+    @property
+    def getPlayers(self) -> list[Player]:
+        return self.__players
+
+    @property
+    def isFull(self) -> bool:
+        return len(self.__players) >= self.__maxSize
+
+    @property
+    def getSize(self) -> int:
+        return self.__maxSize
+
+    @property
+    def remaining(self) -> int:
+        return self.__maxSize - len(self.__players)
 
     # Adds a player to the pod.
     def addPlayer(self, newPlayer:Player):
-        if not self.isFull():
+        if not self.isFull:
             self.__players.append(newPlayer)
         else:
             raise PodOverflowError("This pod is full.")
@@ -39,21 +55,11 @@ class Pod:
     def info(self) -> str:
         return f"Name: {self.name}\nPod size: {self.__maxSize}\nPlayers: {len(self.__players)}"
 
-    def getPlayers(self) -> list[Player]:
-        return self.__players
-
-    def isFull(self) -> bool:
-        return len(self.__players) >= self.__maxSize
-
-    def getSize(self) -> int:
-        return self.__maxSize
-
-    def remaining(self) -> int:
-        return self.__maxSize - len(self.__players)
-
     def __str__(self) -> str:
         out = f"{self.name}:\n```\n"
         for p in self.__players:
+            # TESTING: Adds additional info to prints
+            # out += f"{p.name}: {p.checkThrees}, {p.checkDownCount}\n"
             out += f"{p.name}\n"
         out += "```"
         return out

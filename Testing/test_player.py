@@ -16,19 +16,19 @@ Currently seated: False"""
     def test_seat_normal(self):
         test = Player("Test")
         test.seat()
-        self.assertTrue(test.checkSeated())
+        self.assertTrue(test.checkSeated)
 
     # Check seating process in a 3-pod
     def test_seat_three(self):
         test = Player("Test")
         test.seat(unfull=True)
-        self.assertEqual(test.checkThrees(), 1)
+        self.assertEqual(test.checkThrees, 1)
 
     # Check the seating process for a downstairs game
     def test_seat_down(self):
         test = Player("Test")
         test.seat(down=True)
-        self.assertEqual(test.checkDownCount(), 1)
+        self.assertEqual(test.checkDownCount, 1)
 
     # Check to see if attempting to seat a seated player results in error
     def test_reseat_error(self):

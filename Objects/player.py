@@ -2,7 +2,7 @@
 File: player.py
 Brief: Outlines the player class utilized in the Bear Totem Companion
 Author: Brandon Dennis
-Version: 0.0.0
+Version: 0.1.0
 Last updated: 8/4/2026
 TODO: N/A
 """
@@ -25,10 +25,26 @@ A player is created using their name as a (semi)-unique identifier.
 """
 class Player:
     def __init__(self, name:str):
-        self.name = name
-        self.__threes = 0
-        self.__downCount = 0
-        self.__seated = False
+        self.name:str = name
+        self.__threes:int = 0
+        self.__downCount:int = 0
+        self.__seated: bool = False
+
+    @property
+    def checkSeated(self) -> bool:
+        return self.__seated
+
+    @property
+    def checkThrees(self) -> int:
+        return self.__threes
+
+    @property
+    def checkDownCount(self) -> int:
+        return self.__downCount
+
+    @property
+    def getUnidealCount(self) -> int:
+        return self.__threes + self.__downCount
 
     # Checks if the player is already seated and, if not, seats them and increments the proper variables
     def seat(self, unfull:bool=False, down:bool=False):
@@ -43,15 +59,6 @@ class Player:
     # Unseats the player regardless of their seating status
     def unseat(self) -> None:
         self.__seated = False
-
-    def checkSeated(self) -> bool:
-        return self.__seated
-
-    def checkThrees(self) -> int:
-        return self.__threes
-
-    def checkDownCount(self) -> int:
-        return self.__downCount
 
     def __str__(self):
         return f"Player name: {self.name}\nGames in a 3-pod: {self.__threes}\nGames downstairs: {self.__downCount}\nCurrently seated: {self.__seated}"

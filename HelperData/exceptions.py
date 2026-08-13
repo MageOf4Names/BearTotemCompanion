@@ -8,5 +8,17 @@ class SeatingError(Exception):
 class PodOverflowError(Exception):
     pass
 
+class UnderfullBracketError(Exception):
+    pass
+
 class OverfullGroupError(Exception):
+    pass
+
+class UnderfullGroupError(Exception):
+    pass
+
+class PlayerAlreadyGroupedError(Exception):
+    pass
+
+class PlayerExistsError(Exception):
     pass

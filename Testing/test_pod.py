@@ -12,7 +12,7 @@ class TestPod(TestCase):
         p1 = Player("Test")
         test = Pod("pod test")
         test.addPlayer(p1)
-        self.assertEqual(test.getPlayers(), [p1])
+        self.assertEqual(test.getPlayers, [p1])
 
     # Test if adding too many players raises an error
     def test_overflow(self):

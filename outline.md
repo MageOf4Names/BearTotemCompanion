@@ -138,20 +138,6 @@ Creates a global session object for the server. The session will track brackets,
 
 - AddPlayer(Player p): Adds the given player to the pod
 
-#### Adding players:
-
-#### Bulk addition:
-
-#### Implementing groups:
-
-#### Starting a round:
-
-##### Round 1:
-
-##### Round 2 and on:
-
-#### Finishing a session:
-
 ## Potential additions:
 
 - Creating more than one session simultaneously
