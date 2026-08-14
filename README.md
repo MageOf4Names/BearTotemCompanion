@@ -1,5 +1,14 @@
 # Welcome to the Bear Totem Companion app
 
+## Quick links
+
+1. [Project Background](github.com/MageOf4Names/BearTotemCompanion#project-background)
+2. [Current Release](https://github.com/MageOf4Names/BearTotemCompanion#current-release-01)
+3. [Command List](https://github.com/MageOf4Names/BearTotemCompanion#command-list)
+4. [Cloning and Running the Project](https://github.com/MageOf4Names/BearTotemCompanion#cloning-and-running-the-project)
+
+## Project Background
+
 This is a discord bot intended to be the companion app for my LGS to help them sort MTG Commander pods automatically. While the application is general enough to be repurposed for (theoretically) any game store, there are some special rules that make this unique including:
 
 - Multiple seating areas:
@@ -15,9 +24,7 @@ This is a discord bot intended to be the companion app for my LGS to help them s
 
   - Some players attend commander nights in groups and like to be sat together. As a result, the bot needs to be able to maintain these groupings.
 
-## Current Release (0.1):
-
-### State of functionality
+## Current Release (0.1)
 
 The bot is currently in it's first workable state. While functional, there are some edges to smooth over. As it stands, the currently has the following functionality:
 
@@ -31,6 +38,8 @@ The bot is currently in it's first workable state. While functional, there are s
 - End a round and clear all player, group, and bracket data
 
 ## Future plans
+
+### Intended features
 
 These are features that I am actively working on adding to the bot's functionality. Many of these will probably be needed before a 1.0 release.
 
@@ -132,10 +141,10 @@ __Usage:__ `!end`
 
 ## Cloning and Running the Project
 
-#### Out of the box
+### Out of the box
 
 This GitHub repository lacks the bot keys and other environment variable to be able to run out of the box. While it is technically possible to repurpose for your own bot, those variables will need to be reproduced by hand
 
-#### Ideas for repurposing
+### Ideas for repurposing
 
 While the bot itself isn't runnable just from cloning, many of the objects and interfaces used by the bot code are. The Player, Pod, Bracket, and Session objects are all fully fucntional (as you'll see, the bot code is little more than a wrapper for those objects and some error checking). My suggestion would be to spend some time understanding the various functions in each object (or just session if you're in a hurry to get up and going), and write your own wrapper/application around the Session object. While Session is the only object you really need to interact with to get this project up and going, I would highly suggest diving into Bracket, Pod, and Player to fully understand the workings of each object.
