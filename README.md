@@ -2,7 +2,7 @@
 
 ## Quick links
 
-1. [Project Background](github.com/MageOf4Names/BearTotemCompanion#project-background)
+1. [Project Background](https://github.com/MageOf4Names/BearTotemCompanion#project-background)
 2. [Current Release](https://github.com/MageOf4Names/BearTotemCompanion#current-release-01)
 3. [Command List](https://github.com/MageOf4Names/BearTotemCompanion#command-list)
 4. [Cloning and Running the Project](https://github.com/MageOf4Names/BearTotemCompanion#cloning-and-running-the-project)
