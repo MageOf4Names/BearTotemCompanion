@@ -3,15 +3,21 @@
 This is a discord bot intended to be the companion app for my LGS to help them sort MTG Commander pods automatically. While the application is general enough to be repurposed for (theoretically) any game store, there are some special rules that make this unique including:
 
 - Multiple seating areas:
+
   - Bear Totem includes two main seating areas. One upstairs with the game store, and another downstairs in the cafe. As such, the goal of the bot is to randomize pods in such a way that players do not have continuous games in the downstairs area.
 - Variable players:
+
   - As Bear Totem's commander nights are open to the community, there is no guarantee that the number of players is evenly divisible by 4. As a result, some players may be sorted into smaller pods. The bot seeks to ensure that no player is continuously sat in smaller pods.
 - Multiple play brackets:
+
   - Bear Totem offers multiple levels of play including categories like "Play to win" and "Play for fun". As such, the bot needs to accomodate multiple play brackets that all sort players automatically.
 - Grouping:
+
   - Some players attend commander nights in groups and like to be sat together. As a result, the bot needs to be able to maintain these groupings.
 
-### Current State (0.1):
+## Current Release (0.1):
+
+### State of functionality
 
 The bot is currently in it's first workable state. While functional, there are some edges to smooth over. As it stands, the currently has the following functionality:
 
@@ -24,7 +30,7 @@ The bot is currently in it's first workable state. While functional, there are s
 - Start a round by creating and randomly seeding pods while following the rules listed above
 - End a round and clear all player, group, and bracket data
 
-### Future plans
+## Future plans
 
 These are features that I am actively working on adding to the bot's functionality. Many of these will probably be needed before a 1.0 release.
 
@@ -124,7 +130,7 @@ __Usage:__ `!startRound`
 __Description:__ Ends the current session, removing all current players and brackets.
 __Usage:__ `!end`
 
-### Cloning and Running the Project
+## Cloning and Running the Project
 
 #### Out of the box
 
