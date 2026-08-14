@@ -64,6 +64,7 @@ These are features that don't necessarily fit the specific use-case for this pro
 ### start
 
 __Description:__ Creates a new session with a given number of tables and name.
+
 __Usage:__ `!start {tables} {name}`
 
 - tables *(optional)*: The number of tables available in the main seating area.
@@ -72,6 +73,7 @@ __Usage:__ `!start {tables} {name}`
 ### add
 
 __Description:__ Adds a player with a given name to a specified bracket.
+
 __Usage:__ `!add [bracket] [name]`
 
 - bracket: The bracket you want the player added to.
@@ -80,6 +82,7 @@ __Usage:__ `!add [bracket] [name]`
 ### addBulk
 
 __Description:__ Adds multiple players to the same bracket.
+
 __Usage:__ `!addBulk [bracket] [player 1] {player 2} ...`
 
 - bracket: The bracket you want to add players to.
@@ -89,6 +92,7 @@ __Usage:__ `!addBulk [bracket] [player 1] {player 2} ...`
 ### remove
 
 __Description:__ Removes a player from the session regardless of bracket.
+
 __Usage:__ `!add [name]`
 
 - name: The name of the player being removed.
@@ -96,6 +100,7 @@ __Usage:__ `!add [name]`
 ### changeBracket
 
 __Description:__ Changes the bracket of a given player.
+
 __Usage:__ `!changeBracket [new bracket] [player]`
 
 - new bracket: The bracket the player is being moved to.
@@ -104,6 +109,7 @@ __Usage:__ `!changeBracket [new bracket] [player]`
 ### group
 
 __Description:__ Creates a group of players in the same bracket (will create new players if they aren't already there).
+
 __Usage:__ `!group [bracket] [player 1] [player 2] {player 3} {player 4}`
 
 - bracket: The bracket the group is being made in.
@@ -113,6 +119,7 @@ __Usage:__ `!group [bracket] [player 1] [player 2] {player 3} {player 4}`
 ### playerCount
 
 __Description:__ Gives a count of players in a given bracket (or all brackets if none is specified).
+
 __Usage:__ `!playerCount {bracket}`
 
 - bracket *(optional)*: The bracket a count is required for. Leave blank for all brackets.
@@ -120,6 +127,7 @@ __Usage:__ `!playerCount {bracket}`
 ### listPlayers
 
 __Description:__ Lists all current players in a given bracket (or all brackets if none is specified).
+
 __Usage:__ `!listPlayers {bracket}`
 
 - bracket *(optional)*: The bracket a player list is required for. Leave blank for all brackets.
@@ -127,16 +135,19 @@ __Usage:__ `!listPlayers {bracket}`
 ### listBrackets
 
 __Description:__ Lists the names and indexes of all brackets.
+
 __Usage:__ `!listBrackets`
 
 ### startRound
 
 __Description:__ Starts a new round of pods and lists the table arrangements.
+
 __Usage:__ `!startRound`
 
 ### end
 
 __Description:__ Ends the current session, removing all current players and brackets.
+
 __Usage:__ `!end`
 
 ## Cloning and Running the Project
