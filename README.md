@@ -24,7 +24,7 @@ This is a discord bot intended to be the companion app for my LGS to help them s
 
   - Some players attend commander nights in groups and like to be sat together. As a result, the bot needs to be able to maintain these groupings.
 
-## Current Release (0.1)
+## Current Release (0.2)
 
 The bot is currently in it's first workable state. While functional, there are some edges to smooth over. As it stands, the currently has the following functionality:
 
@@ -36,6 +36,9 @@ The bot is currently in it's first workable state. While functional, there are s
 - List all available brackets
 - Start a round by creating and randomly seeding pods while following the rules listed above
 - End a round and clear all player, group, and bracket data
+- Options to limit access by role or permission
+- Global player list avoids one name being added to multiple brackets
+- Environment now supports the ability to send placement messages in channels other than the one the command originated in
 
 ## Future plans
 
@@ -43,11 +46,8 @@ The bot is currently in it's first workable state. While functional, there are s
 
 These are features that I am actively working on adding to the bot's functionality. Many of these will probably be needed before a 1.0 release.
 
-- Tracking a global list of players to avoid any player from being listed in multiple brackets
 - Improving the help function to be more user-friendly
 - Implementing command completion to reduce the amount of accidental errors while trying to use commands
-- Restricting use of the bot to a whitelist of users/roles on a per-server level
-- Adding the ability to send placement messages to a different channel so the seating can be shared without having to see the command inputs
 - Adding presets to commands like !start to reduce the amounts of input needed
 
 ### Potential Features
@@ -58,6 +58,7 @@ These are features that don't necessarily fit the specific use-case for this pro
 - Seeing and editing each bracket's seating preset (whether they are defaulted to upstairs/downstairs)
 - Setting table counts after a session has started
 - Adding flex-tables (tables that could hold one group of 4 or 2 groups of three)
+- Make environment variables more easily configured to reduce the need of manual entry
 
 ## Command List
 
@@ -93,7 +94,7 @@ __Usage:__ `!addBulk [bracket] [player 1] {player 2} ...`
 
 __Description:__ Removes a player from the session regardless of bracket.
 
-__Usage:__ `!add [name]`
+__Usage:__ `!remove [name]`
 
 - name: The name of the player being removed.
 
@@ -128,9 +129,17 @@ __Usage:__ `!playerCount {bracket}`
 
 __Description:__ Lists all current players in a given bracket (or all brackets if none is specified).
 
-__Usage:__ `!listPlayers {bracket}`
+__Usage:__ `!playerList {bracket}`
 
 - bracket *(optional)*: The bracket a player list is required for. Leave blank for all brackets.
+
+### listGroups
+
+__Description:__ Lists all current groups in a given bracket (or all brackets if none is specified).
+
+__Usage:__ `!listGroups {bracket}`
+
+- bracket *(optional)*: The bracket a group list is required for. Leave blank for all brackets.
 
 ### listBrackets
 

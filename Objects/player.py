@@ -2,7 +2,7 @@
 File: player.py
 Brief: Outlines the player class utilized in the Bear Totem Companion
 Author: Brandon Dennis
-Version: 0.1.0
+Version: 0.2
 Last updated: 8/4/2026
 TODO: N/A
 """

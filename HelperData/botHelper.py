@@ -30,10 +30,13 @@ group = Command("Creates a group of players in the same bracket (will create new
                      "players 3 & 4": "Additional player names."})
 
 pCount = Command("Gives a count of players in a given bracket (or all brackets if none is specified).", "Gives a count of players on one or all brackets",
-                           {"bracket": "The bracket a count is required for. Leave blank for all brackets."})
+                {"bracket": "The bracket a count is required for. Leave blank for all brackets."})
 
 pList = Command("Lists all current players in a given bracket (or all brackets if none is specified).", "List players in one or all brackets",
-                           {"bracket": "The bracket a player list is required for. Leave blank for all brackets."})
+                {"bracket": "The bracket a player list is required for. Leave blank for all brackets."})
+
+gList = Command("Lists all current groups in a given bracket (or all brackets if none is specified).", "List group members in one or all brackets",
+                {"bracket": "The bracket a group list is required for. Leave blank for all brackets."})
 
 brkList = Command("Lists the names and indexes of all brackets.", "Lists all current brackets", None)
 
@@ -54,6 +57,7 @@ commandList = {
     "group": group,
     "playerCount": pCount,
     "playerList": pList,
+    "listGroups": gList,
     "listBrackets": brkList,
     "startRound": startRound,
     "end": end

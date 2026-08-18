@@ -2,9 +2,10 @@
 File: bracket.py
 Brief: Outlines an individual bracket object. Used in the session object later.
 Author: Brandon Dennis
-Version: 0.1.0
-Last updated: 8/13/2026
+Version: 0.2
+Last updated: 8/18/2026
 TODO:
+Make startRound take a list of integers representing open tables
 """
 
 from Objects.player import *
@@ -166,6 +167,8 @@ class Bracket:
     def makePods(self, tables:int) -> int:
         if len(self.__players) < 3:
             raise UnderfullBracketError(f"Bracket {self.name} doesn't containe enough players to create pods.")
+        elif len(self.__players) == 5:
+            raise UnderfullBracketError(f"Bracket {self.name} has 5 players. Cannot seat players evenly.")
         # Calculate the number of full pods and 3 pods based on the number of players
         match len(self.__players) % 4:
             # Evenly divisible by 4: All pods are full

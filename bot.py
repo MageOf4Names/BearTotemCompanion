@@ -2,9 +2,11 @@
 File: bot.py
 Brief: Core code for the Bear Totem Companion bot
 Author: Brandon Dennis
-Version: 0.1.0
-Last updated: 8/14/2026
+Version: 0.2
+Last updated: 8/118/2026
 TODO:
+Overload help commands
+Implement error handler
 """
 
 # base python imports
@@ -28,9 +30,13 @@ from Objects.session import Session
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 DEV_ENV = os.getenv("DEV_GUILD")
-DEV_GUILD, DEV_PERM = DEV_ENV.split(",")
+DEV_GUILD, DEV_PERM, DEV_PUB_CHANNEL = DEV_ENV.split(",")
 BT_ENV = os.getenv("BT_GUILD")
-BT_GUILD, BT_PERM = BT_ENV.split(",")
+BT_GUILD, BT_PERM, BT_PUB_CHANNEL = BT_ENV.split(",")
+ENVIRONMENTS = {
+    DEV_GUILD: [DEV_PERM, int(DEV_PUB_CHANNEL)],
+    BT_GUILD: [BT_PERM, int(BT_PUB_CHANNEL)]
+}
 
 intents = Intents.none()
 intents.message_content = True
@@ -40,7 +46,7 @@ btc = commands.Bot(command_prefix="!", intents=intents, activity=CustomActivity(
 session:Session = None
 
 
-#@btc.command()
+# @btc.command()
 # Brings up a help menu for a specific command, or all commands if none is specified
 async def Help(ctx, cmd: str=""):
     # Empty message variable to make sending messages easier
@@ -83,8 +89,15 @@ async def Help(ctx, cmd: str=""):
 async def startSession(
     ctx,
     name:str=commands.param(default="Bear Totem Commander", displayed_name="event_name", description=start.parameters["event_name"]),
-    tables:int=commands.param(default=7, displayed_name="number_of_tables", description=start.parameters["number_of_tables"])
+    tables=commands.param(default=None, displayed_name="number_of_tables", description=start.parameters["number_of_tables"])
 ):
+    # Make sure the number of tables can be converted to an integer
+    try:
+        tables = int(tables) if tables != None else 7
+    except ValueError:
+        await ctx.send(f"Invalid number_of_tables: '{tables}'. Please use a valid integer.")
+        return
+
     global session
     # No session was found, create a session and give feedback
     if not session:
@@ -290,7 +303,41 @@ async def playerList(
         else:
             await ctx.send(session.listPlayers(br=bracket - 1))
     except (ValueError, IndexError):
-        await ctx.send(f"Invalid bracket: '{bracket}'. Please use a valid bracket index. Use !listBrackets to view the current brackets.")
+        await ctx.send(
+            f"Invalid bracket: '{bracket}'. Please use a valid bracket index. Use !listBrackets to view the current brackets."
+        )
+
+
+@btc.command(
+    name="listGroups",
+    description=gList.description,
+    help=gList.brief,
+)
+# Sends a message with a list of players in one or all brackets
+async def groupList(
+    ctx,
+    bracket=commands.param(
+        displayed_name="bracket", description=gList.parameters["bracket"], default=None
+    ),
+):
+    # Retrieve session variable and check for valid session.
+    global session
+    if session == None:
+        await ctx.send(
+            "No current active session started. Use `!start` to start a default session or `!Help start` for more information"
+        )
+        return
+    # Error checking for non-integer bracket values
+    try:
+        bracket = int(bracket) if bracket else None
+        if bracket == None:
+            await ctx.send(session.listGroups())
+        else:
+            await ctx.send(session.listGroups(br=bracket - 1))
+    except (ValueError, IndexError):
+        await ctx.send(
+            f"Invalid bracket: '{bracket}'. Please use a valid bracket index. Use !listBrackets to view the current brackets."
+        )
 
 
 @btc.command(
@@ -314,7 +361,7 @@ async def listBrackets(ctx):
     help=startRound.brief,
 )
 # Starts a round and seats all players in all brackets
-async def startRound(ctx):
+async def startRound(ctx:commands.Context):
     # Retrieve session variable and check for valid session.
     global session
     if session == None:
@@ -326,8 +373,10 @@ async def startRound(ctx):
     try:
         out = session.startRound()
         session.setDownstairs(0, False)
+        # If the envoronment has a public channel configured, send to that
+        public = btc.get_channel(ENVIRONMENTS[ctx.guild.name][1]) if ctx.guild.name in ENVIRONMENTS else ctx
         for msg in out:
-            await ctx.send(msg)
+            await public.send(msg)
     except UnderfullBracketError as error:
         # If the round start fails, revert to the backup session
         session = backup

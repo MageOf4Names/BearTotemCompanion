@@ -2,7 +2,7 @@
 File: pod.py
 Brief: Class outline for the pod object used in Bear Totem Companion
 Author: Brandon Dennis
-Version: 0.1.0
+Version: 0.2
 Last updated: 8/11/2026
 TODO:
 """
