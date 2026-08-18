@@ -63,12 +63,12 @@ These are features that don't necessarily fit the specific use-case for this pro
 
 ### start
 
-__Description:__ Creates a new session with a given number of tables and name.
+__Description:__ Creates a new session with a given name and number of tables.
 
 __Usage:__ `!start {tables} {name}`
 
-- tables *(optional)*: The number of tables available in the main seating area.
-- name *(optional)*: The name of the session (event code, event name, etc.).
+- event_name *(optional)*: The name of the session (event code, event name, etc.).
+- number_of_tables *(optional)*: The number of tables available in the main seating area.
 
 ### add
 
@@ -124,7 +124,7 @@ __Usage:__ `!playerCount {bracket}`
 
 - bracket *(optional)*: The bracket a count is required for. Leave blank for all brackets.
 
-### listPlayers
+### playerList
 
 __Description:__ Lists all current players in a given bracket (or all brackets if none is specified).
 
