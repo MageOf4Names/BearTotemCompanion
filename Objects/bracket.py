@@ -6,6 +6,7 @@ Version: 0.2
 Last updated: 8/18/2026
 TODO:
 Make startRound take a list of integers representing open tables
+Edit seating methods to exclude players the person played with previously
 """
 
 from Objects.player import *

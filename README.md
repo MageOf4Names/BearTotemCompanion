@@ -47,6 +47,7 @@ The bot is currently in it's first workable state. While functional, there are s
 These are features that I am actively working on adding to the bot's functionality. Many of these will probably be needed before a 1.0 release.
 
 - Improving the help function to be more user-friendly
+- Change seating to reduce the likelyhood that a player is sat with the same people multiple times
 - Implementing command completion to reduce the amount of accidental errors while trying to use commands
 - Adding presets to commands like !start to reduce the amounts of input needed
 
@@ -66,7 +67,7 @@ These are features that don't necessarily fit the specific use-case for this pro
 
 __Description:__ Creates a new session with a given name and number of tables.
 
-__Usage:__ `!start {tables} {name}`
+__Usage:__ `!start {event_name} {number_of_tables}`
 
 - event_name *(optional)*: The name of the session (event code, event name, etc.).
 - number_of_tables *(optional)*: The number of tables available in the main seating area.
@@ -133,11 +134,11 @@ __Usage:__ `!playerList {bracket}`
 
 - bracket *(optional)*: The bracket a player list is required for. Leave blank for all brackets.
 
-### listGroups
+### groupList
 
 __Description:__ Lists all current groups in a given bracket (or all brackets if none is specified).
 
-__Usage:__ `!listGroups {bracket}`
+__Usage:__ `!groupList {bracket}`
 
 - bracket *(optional)*: The bracket a group list is required for. Leave blank for all brackets.
 

@@ -42,7 +42,7 @@ intents = Intents.none()
 intents.message_content = True
 intents.messages = True
 intents.guilds = True
-btc = commands.Bot(command_prefix="!", intents=intents, activity=CustomActivity(name="Type !Help for the command menu."))
+btc = commands.Bot(command_prefix="!", intents=intents, activity=CustomActivity(name="Type !help for the command menu."))
 session:Session = None
 
 
@@ -309,7 +309,7 @@ async def playerList(
 
 
 @btc.command(
-    name="listGroups",
+    name="groupList",
     description=gList.description,
     help=gList.brief,
 )

@@ -4,7 +4,9 @@ Brief: Outlines the player class utilized in the Bear Totem Companion
 Author: Brandon Dennis
 Version: 0.2
 Last updated: 8/4/2026
-TODO: N/A
+TODO:
+Add an attribute that contains the names of players in the pod previously
+    - Used as exclusion criteria in sorting for the next round
 """
 
 from HelperData.exceptions import SeatingError
