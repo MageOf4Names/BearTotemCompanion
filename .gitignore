@@ -1,7 +1,8 @@
 /.env
 /.beartotemcompanion
 /.vscode
-/*/__pycache__
+*/__pycache__
+/__pycache__
 /unittests.ps1
 /testing.ipynb
 /pastebin.txt
