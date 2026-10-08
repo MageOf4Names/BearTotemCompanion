@@ -1,30 +1,30 @@
 # Welcome to the Bear Totem Companion app
 
+The Bear Totem Companion is a discord bot meant to assist with seating groups or "pods" of Magic: The Gathering players. There are some intricacies added in to fit the specific environment of my local game store Bear Totem.
+
 ## Quick links
 
-1. [Project Background](https://github.com/MageOf4Names/BearTotemCompanion#project-background)
-2. [Current Release](https://github.com/MageOf4Names/BearTotemCompanion#current-release-01)
-3. [Command List](https://github.com/MageOf4Names/BearTotemCompanion#command-list)
-4. [Cloning and Running the Project](https://github.com/MageOf4Names/BearTotemCompanion#cloning-and-running-the-project)
+1. [Motivation](https://github.com/MageOf4Names/BearTotemCompanion#motivation)
+2. [Quick Start](https://github.com/MageOf4Names/BearTotemCompanion#quick-start)
+3. [Current Release](https://github.com/MageOf4Names/BearTotemCompanion#current-release-03)
+4. [Usage](https://github.com/MageOf4Names/BearTotemCompanion#usage)
+5. [Cloning and Running the Project](https://github.com/MageOf4Names/BearTotemCompanion#cloning-and-running-the-project)
+6. [Contributing](https://github.com/MageOf4Names/BearTotemCompanion#cloning-and-running-the-project)
 
-## Project Background
+## Motivation
 
 This is a discord bot intended to be the companion app for my LGS to help them sort MTG Commander pods automatically. While the application is general enough to be repurposed for (theoretically) any game store, there are some special rules that make this unique including:
 
-- Multiple seating areas:
+- **Multiple seating areas**: Bear Totem includes two main seating areas. One upstairs with the game store, and another downstairs in the cafe. As such, the goal of the bot is to randomize pods in such a way that players do not have continuous games in the downstairs area.
+- **Variable players**: As Bear Totem's commander nights are open to the community, there is no guarantee that the number of players is evenly divisible by 4. As a result, some players may be sorted into smaller pods. The bot seeks to ensure that no player is continuously sat in smaller pods.
+- **Multiple play brackets**: Bear Totem offers multiple levels of play including categories like "Play to win" and "Play for fun". As such, the bot needs to accomodate multiple play brackets that all sort players automatically.
+- **Grouping**: Some players attend commander nights in groups and like to be sat together. As a result, the bot needs to be able to maintain these groupings.
 
-  - Bear Totem includes two main seating areas. One upstairs with the game store, and another downstairs in the cafe. As such, the goal of the bot is to randomize pods in such a way that players do not have continuous games in the downstairs area.
-- Variable players:
+## Quick Start
 
-  - As Bear Totem's commander nights are open to the community, there is no guarantee that the number of players is evenly divisible by 4. As a result, some players may be sorted into smaller pods. The bot seeks to ensure that no player is continuously sat in smaller pods.
-- Multiple play brackets:
+### Bear Totem Companion is not currently a public bot
 
-  - Bear Totem offers multiple levels of play including categories like "Play to win" and "Play for fun". As such, the bot needs to accomodate multiple play brackets that all sort players automatically.
-- Grouping:
-
-  - Some players attend commander nights in groups and like to be sat together. As a result, the bot needs to be able to maintain these groupings.
-
-## Current Release (0.2)
+## Current Release (0.3)
 
 The bot is currently in it's first workable state. While functional, there are some edges to smooth over. As it stands, the currently has the following functionality:
 
@@ -39,6 +39,7 @@ The bot is currently in it's first workable state. While functional, there are s
 - Options to limit access by role or permission
 - Global player list avoids one name being added to multiple brackets
 - Environment now supports the ability to send placement messages in channels other than the one the command originated in
+- Updated !help commands that dive into optional and required arguments for commands
 
 ## Future plans
 
@@ -46,10 +47,8 @@ The bot is currently in it's first workable state. While functional, there are s
 
 These are features that I am actively working on adding to the bot's functionality. Many of these will probably be needed before a 1.0 release.
 
-- Improving the help function to be more user-friendly
 - Change seating to reduce the likelyhood that a player is sat with the same people multiple times
 - Implementing command completion to reduce the amount of accidental errors while trying to use commands
-- Adding presets to commands like !start to reduce the amounts of input needed
 
 ### Potential Features
 
@@ -61,7 +60,7 @@ These are features that don't necessarily fit the specific use-case for this pro
 - Adding flex-tables (tables that could hold one group of 4 or 2 groups of three)
 - Make environment variables more easily configured to reduce the need of manual entry
 
-## Command List
+## Usage
 
 ### start
 
@@ -169,3 +168,5 @@ This GitHub repository lacks the bot keys and other environment variable to be a
 ### Ideas for repurposing
 
 While the bot itself isn't runnable just from cloning, many of the objects and interfaces used by the bot code are. The Player, Pod, Bracket, and Session objects are all fully fucntional (as you'll see, the bot code is little more than a wrapper for those objects and some error checking). My suggestion would be to spend some time understanding the various functions in each object (or just session if you're in a hurry to get up and going), and write your own wrapper/application around the Session object. While Session is the only object you really need to interact with to get this project up and going, I would highly suggest diving into Bracket, Pod, and Player to fully understand the workings of each object.
+
+## Contributing
