@@ -5,11 +5,9 @@ The Bear Totem Companion is a discord bot meant to assist with seating groups or
 ## Quick links
 
 1. [Motivation](https://github.com/MageOf4Names/BearTotemCompanion#motivation)
-2. [Quick Start](https://github.com/MageOf4Names/BearTotemCompanion#quick-start)
-3. [Current Release](https://github.com/MageOf4Names/BearTotemCompanion#current-release-03)
-4. [Usage](https://github.com/MageOf4Names/BearTotemCompanion#usage)
-5. [Cloning and Running the Project](https://github.com/MageOf4Names/BearTotemCompanion#cloning-and-running-the-project)
-6. [Contributing](https://github.com/MageOf4Names/BearTotemCompanion#cloning-and-running-the-project)
+2. [Current Release](https://github.com/MageOf4Names/BearTotemCompanion#current-release-03)
+3. [Usage](https://github.com/MageOf4Names/BearTotemCompanion#usage)
+4. [Cloning and Running the Project](https://github.com/MageOf4Names/BearTotemCompanion#cloning-and-running-the-project)
 
 ## Motivation
 
@@ -19,10 +17,6 @@ This is a discord bot intended to be the companion app for my LGS to help them s
 - **Variable players**: As Bear Totem's commander nights are open to the community, there is no guarantee that the number of players is evenly divisible by 4. As a result, some players may be sorted into smaller pods. The bot seeks to ensure that no player is continuously sat in smaller pods.
 - **Multiple play brackets**: Bear Totem offers multiple levels of play including categories like "Play to win" and "Play for fun". As such, the bot needs to accomodate multiple play brackets that all sort players automatically.
 - **Grouping**: Some players attend commander nights in groups and like to be sat together. As a result, the bot needs to be able to maintain these groupings.
-
-## Quick Start
-
-### Bear Totem Companion is not currently a public bot
 
 ## Current Release (0.3)
 
@@ -168,5 +162,3 @@ This GitHub repository lacks the bot keys and other environment variable to be a
 ### Ideas for repurposing
 
 While the bot itself isn't runnable just from cloning, many of the objects and interfaces used by the bot code are. The Player, Pod, Bracket, and Session objects are all fully fucntional (as you'll see, the bot code is little more than a wrapper for those objects and some error checking). My suggestion would be to spend some time understanding the various functions in each object (or just session if you're in a hurry to get up and going), and write your own wrapper/application around the Session object. While Session is the only object you really need to interact with to get this project up and going, I would highly suggest diving into Bracket, Pod, and Player to fully understand the workings of each object.
-
-## Contributing
