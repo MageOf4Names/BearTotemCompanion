@@ -1,29 +1,27 @@
 FROM python:3.13
 
-# Transfer the .env file
-ADD ./.env .
+# Add environment variables
+ADD .env .
 
 # Import required packages
-RUN pip install discord.py python-dotenv
+ADD ./requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Add helper data file
-ADD ./HelperData/botHelper.py ./HelperData/
-ADD ./HelperData/exceptions.py ./HelperData/
-ADD ./HelperData/helpCommand.py ./HelperData/
+ADD ./HelperData/ ./HelperData/
 
 # Add the main objects
-ADD ./Objects/bracket.py ./Objects/
-ADD ./Objects/player.py ./Objects/
-ADD ./Objects/pod.py ./Objects/
-ADD ./Objects/session.py ./Objects/
+ADD ./Objects/ ./Objects/
 
 # Add all the cogs
-ADD ./cogs/edits_cog.py ./cogs/
-ADD ./cogs/session_cog.py ./cogs/
-ADD ./cogs/views_cog.py ./cogs/
+ADD ./cogs/ ./cogs/
 
 # Add the main bot
 ADD bot.py .
+
+# Define ports
+ENV PORT=8080
+EXPOSE 8080
 
 # Run our Python script
 CMD ["python", "bot.py"]
