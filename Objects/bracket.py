@@ -3,10 +3,9 @@ File: bracket.py
 Brief: Outlines an individual bracket object. Used in the session object later.
 Author: Brandon Dennis
 Version: 0.2
-Last updated: 8/18/2026
+Last updated: 11/9/2026
 TODO:
 Make startRound take a list of integers representing open tables
-Edit seating methods to exclude players the person played with previously
 """
 
 from Objects.player import *
@@ -132,33 +131,37 @@ class Bracket:
             if not p.checkSeated:
                 soloPod, threePod, downstairs = self.findPod(p, threeAvg, downAvg, 1)
                 soloPod.addPlayer(p)
-                p.seat(threePod, downstairs)
+                p.seat(soloPod.getPlayers, threePod, downstairs)
 
     # For a particular player, find a suitable pod given their statistics
     def findPod(self, p:Player, threeAvg:int, downAvg:int, groupSize:int) -> tuple[Pod, bool, bool]:
-        # Variables needed for re-randomizing
-        found = False
         tries = 0
-        while not found and tries < 100:
-            # Increment a counter to avoid infinite loop
+        # Randomize the order of each pod to prevent them filling in any predictable order
+        shuffle(self.__remaining_pods)
+        # Iterate through each pod until a suitable one is found (or until out of options)
+        for pod in self.__remaining_pods:
+            # Test value to see how effective filling is
             tries += 1
-            # Randomly assign a pod and check its qualities
-            pod = choice(self.__remaining_pods)
+            # Check the Pod's qualities
             threePod = True if pod.getSize == 3 else False
             downstairs = True if "downstairs" in pod.name.lower() else False
-            # Check to see if the group can fit in the pod, otherwise re-randomize
+            # Check to see if the group can fit in the pod
             if pod.remaining < groupSize:
+                continue
+            # Check to see if the players have played anyone in this pod before
+            if p.hasPlayed(pod.getPlayers):
+                print(f"{p.name} found duplicate player")
                 continue
             # If the group is under the average "un-ideal" qualities, assign them to any pod that can fit them
             if p.checkThrees < threeAvg and p.checkDownCount < downAvg:
-                found = True
+                break
             # Otherwise, check and see if the pod is suitable for the group
-            if p.checkThrees > threeAvg and threePod:
-                continue
-            elif p.checkDownCount > downAvg and downstairs:
-                continue
-            else:
-                found = True
+            if p.checkThrees >= threeAvg and not threePod:
+                break
+            elif p.checkDownCount >= downAvg and not downstairs:
+                break
+        # Test print to monitor try counts
+        print(tries)
         # If the selected pod is empty after seating, remove it from the available pods.
         if pod.remaining == groupSize:
             self.__remaining_pods.remove(pod)
