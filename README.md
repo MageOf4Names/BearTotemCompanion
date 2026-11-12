@@ -34,6 +34,7 @@ The bot is currently in it's first workable state. While functional, there are s
 - Global player list avoids one name being added to multiple brackets
 - Environment now supports the ability to send placement messages in channels other than the one the command originated in
 - Updated !help commands that dive into optional and required arguments for commands
+- Reduced the likelyhood of players being seated with players they have previously played with.
 
 ## Future plans
 
@@ -41,7 +42,6 @@ The bot is currently in it's first workable state. While functional, there are s
 
 These are features that I am actively working on adding to the bot's functionality. Many of these will probably be needed before a 1.0 release.
 
-- Change seating to reduce the likelyhood that a player is sat with the same people multiple times
 - Implementing command completion to reduce the amount of accidental errors while trying to use commands
 
 ### Potential Features
