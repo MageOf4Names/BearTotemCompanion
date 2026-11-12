@@ -131,7 +131,13 @@ class Bracket:
             if not p.checkSeated:
                 soloPod, threePod, downstairs = self.findPod(p, threeAvg, downAvg, 1)
                 soloPod.addPlayer(p)
-                p.seat(soloPod.getPlayers, threePod, downstairs)
+                p.seat(threePod, downstairs)
+        # Populate all player's have played lists
+        print("pre")
+        for pod in self.__pods:
+            for player in pod.getPlayers:
+                player.addPlayed(pod.getPlayers)
+        print("post")
 
     # For a particular player, find a suitable pod given their statistics
     def findPod(self, p:Player, threeAvg:int, downAvg:int, groupSize:int) -> tuple[Pod, bool, bool]:
@@ -161,7 +167,8 @@ class Bracket:
             elif p.checkDownCount >= downAvg and not downstairs:
                 break
         # Test print to monitor try counts
-        print(tries)
+        #print(tries)
+
         # If the selected pod is empty after seating, remove it from the available pods.
         if pod.remaining == groupSize:
             self.__remaining_pods.remove(pod)

@@ -47,6 +47,11 @@ class Player:
     def getUnidealCount(self) -> int:
         return self.__threes + self.__downCount
 
+    # Adds player names to the Player's set of previously played opponents
+    def addPlayed(self, players:list['Player']):
+        for p in players:
+            self.__played.add(p.name)
+
     # Checks players in potential pod with play history for the session
     def hasPlayed(self, players: list['Player']) -> bool:
         for p in players:
@@ -56,12 +61,10 @@ class Player:
         return False
 
     # Checks if the player is already seated and, if not, seats them and increments the proper variables
-    def seat(self, players:list['Player'], unfull:bool=False, down:bool=False):
+    def seat(self, unfull:bool=False, down:bool=False):
         if self.__seated:
             raise SeatingError(f"Player {self.name} is already seated.")
         self.__seated = True
-        for p in players:
-            self.__played.add(p.name)
         if unfull:
             self.__threes += 1
         if down:
