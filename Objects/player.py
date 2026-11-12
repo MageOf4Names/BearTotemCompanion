@@ -3,10 +3,8 @@ File: player.py
 Brief: Outlines the player class utilized in the Bear Totem Companion
 Author: Brandon Dennis
 Version: 0.2
-Last updated: 8/4/2026
+Last updated: 11/9/2026
 TODO:
-Add an attribute that contains the names of players in the pod previously
-    - Used as exclusion criteria in sorting for the next round
 """
 
 from HelperData.exceptions import SeatingError
@@ -31,6 +29,7 @@ class Player:
         self.__threes:int = 0
         self.__downCount:int = 0
         self.__seated: bool = False
+        self.__played: set[str] = set()
 
     @property
     def checkSeated(self) -> bool:
@@ -47,6 +46,19 @@ class Player:
     @property
     def getUnidealCount(self) -> int:
         return self.__threes + self.__downCount
+
+    # Adds player names to the Player's set of previously played opponents
+    def addPlayed(self, players:list['Player']):
+        for p in players:
+            self.__played.add(p.name)
+
+    # Checks players in potential pod with play history for the session
+    def hasPlayed(self, players: list['Player']) -> bool:
+        for p in players:
+            # If the player has been sat with anyone at this pod, return true
+            if p.name in self.__played:
+                return True
+        return False
 
     # Checks if the player is already seated and, if not, seats them and increments the proper variables
     def seat(self, unfull:bool=False, down:bool=False):
