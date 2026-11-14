@@ -2,7 +2,7 @@
 File: bot.py
 Brief: Core code for the Bear Totem Companion bot
 Author: Brandon Dennis
-Version: 0.2
+Version: 0.4
 Last updated: 11/9/2026
 TODO:
 Implement error handler
@@ -35,11 +35,11 @@ DEV_GUILD, DEV_PERM, DEV_PUB_CHANNEL = DEV_ENV.split(",")
 BT_ENV = os.getenv("BT_GUILD")
 BT_GUILD, BT_PERM, BT_PUB_CHANNEL = BT_ENV.split(",")
 # Test Variables
-"""
+#"""
 TOKEN = os.getenv("TEST_TOKEN")
 TEST_ENV = os.getenv("TEST_GUILD")
 DEV_GUILD, DEV_PERM, DEV_PUB_CHANNEL = TEST_ENV.split(",")
-"""
+#"""
 ENVIRONMENTS = {
     DEV_GUILD: [DEV_PERM, int(DEV_PUB_CHANNEL)],
     BT_GUILD: [BT_PERM, int(BT_PUB_CHANNEL)]
@@ -49,7 +49,7 @@ ENVIRONMENTS = {
 class BTCBot(commands.Bot):
     def __init__(self, command_prefix, *, help_command = _default, tree_cls = app_commands.CommandTree, description = None, allowed_contexts = MISSING, allowed_installs = MISSING, intents, **options):
         super().__init__(command_prefix, help_command=help_command, tree_cls=tree_cls, description=description, allowed_contexts=allowed_contexts, allowed_installs=allowed_installs, intents=intents, **options)
-        self.session:Session | None = None
+        self.sessions:dict[str, Session] = {}
         self.environments = ENVIRONMENTS
 
 
