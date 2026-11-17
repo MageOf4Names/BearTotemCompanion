@@ -3,7 +3,7 @@ File: player.py
 Brief: Outlines the player class utilized in the Bear Totem Companion
 Author: Brandon Dennis
 Version: 0.4
-Last updated: 11/9/2026
+Last updated: 11/16/2026
 TODO:
 """
 
@@ -46,6 +46,10 @@ class Player:
     @property
     def getUnidealCount(self) -> int:
         return self.__threes + self.__downCount
+
+    @property
+    def getPlayHistory(self) -> set[str]:
+        return self.__played
 
     # Adds player names to the Player's set of previously played opponents
     def addPlayed(self, players:list['Player']):
