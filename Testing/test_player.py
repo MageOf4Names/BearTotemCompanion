@@ -47,3 +47,11 @@ Currently seated: False"""
 Games in a 3-pod: 2
 Games downstairs: 1
 Currently seated: True""")
+
+    # Tests the seated property to see if the play history works as intended
+    def test_history(self):
+        test = Player("Test")
+        test.addPlayed([Player("Test2")])
+        self.assertTrue(test.hasPlayed([Player("Test2")]))
+        self.assertFalse(test.hasPlayed([Player("Test3")]))
+        self.assertEqual(test.getPlayHistory, {"Test2"})

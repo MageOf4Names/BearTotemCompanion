@@ -2,8 +2,8 @@
 File: views_cog.py
 Brief: Includes the code for commands that view the current bot session
 Author: Brandon Dennis
-Version: 0.2
-Last updated: 10/2/2026
+Version: 0.4
+Last updated: 11/13/2026
 TODO:
 Group commands
 Implement auto complete and suggestions
@@ -27,13 +27,14 @@ class ViewSession(commands.Cog):
     async def playerCount(self, ctx: commands.Context, bracket: int | None = None):
         # Retrieve session variable and check for valid session.
         if await self.sessionNotFound(ctx): return
+        session = self.bot.sessions[ctx.guild.name]
         # Error checking for non-integer bracket values
         try:
             bracket = int(bracket) if bracket else None
             if bracket == None:
-                await ctx.send(self.bot.session.playerCount())
+                await ctx.send(session.playerCount())
             else:
-                await ctx.send(self.bot.session.playerCount(br=bracket - 1))
+                await ctx.send(session.playerCount(br=bracket - 1))
         except (ValueError, IndexError):
             await ctx.send(
                 f"Invalid bracket: '{bracket}'. Please use a valid bracket index. Use !listBrackets to view the current brackets."
@@ -44,13 +45,14 @@ class ViewSession(commands.Cog):
     async def playerList(self, ctx: commands.Context, bracket: int | None = None):
         # Retrieve session variable and check for valid session.
         if await self.sessionNotFound(ctx): return
+        session = self.bot.sessions[ctx.guild.name]
         # Error checking for non-integer bracket values
         try:
             bracket = int(bracket) if bracket else None
             if bracket == None:
-                await ctx.send(self.bot.session.listPlayers())
+                await ctx.send(session.listPlayers())
             else:
-                await ctx.send(self.bot.session.listPlayers(br=bracket - 1))
+                await ctx.send(session.listPlayers(br=bracket - 1))
         except (ValueError, IndexError):
             await ctx.send(
                 f"Invalid bracket: '{bracket}'. Please use a valid bracket index. Use !listBrackets to view the current brackets."
@@ -65,13 +67,14 @@ class ViewSession(commands.Cog):
     ):
         # Retrieve session variable and check for valid session.
         if await self.sessionNotFound(ctx): return
+        session = self.bot.sessions[ctx.guild.name]
         # Error checking for non-integer bracket values
         try:
             bracket = int(bracket) if bracket else None
             if bracket == None:
-                await ctx.send(self.bot.session.listGroups())
+                await ctx.send(session.listGroups())
             else:
-                await ctx.send(self.bot.session.listGroups(br=bracket - 1))
+                await ctx.send(session.listGroups(br=bracket - 1))
         except (ValueError, IndexError):
             await ctx.send(
                 f"Invalid bracket: '{bracket}'. Please use a valid bracket index. Use !listBrackets to view the current brackets."
@@ -82,10 +85,10 @@ class ViewSession(commands.Cog):
     async def listBrackets(self, ctx: commands.Context):
         # Retrieve session variable and check for valid session.
         if await self.sessionNotFound(ctx): return
-        await ctx.send(self.bot.session.listBrackets)
+        await ctx.send(self.bot.sessions[ctx.guild.name].listBrackets)
 
-    async def sessionNotFound(self, ctx):
-        if not self.bot.session:
+    async def sessionNotFound(self, ctx: commands.Context):
+        if ctx.guild.name not in self.bot.sessions:
             await ctx.send(
                 "No current active session started. Use `!start` to start a default session or `!Help start` for more information"
             )

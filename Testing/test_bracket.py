@@ -68,3 +68,14 @@ class TestBracket(TestCase):
             bracket.addPlayer(f"Player {i}")
         bracket.makePods(7)
         self.assertEqual(len(bracket.getPods), 6)
+
+    def test_seating(self):
+        bracket = Bracket("Test")
+        for i in range(21):
+            bracket.addPlayer(f"Player {i}")
+        bracket.startRound(7)
+        allSeated = True
+        for p in bracket.getPlayers:
+            if p.checkSeated == False:
+                allSeated = False
+        self.assertTrue(allSeated)

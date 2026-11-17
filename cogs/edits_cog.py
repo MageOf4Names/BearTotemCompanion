@@ -2,8 +2,8 @@
 File: edits_cog.py
 Brief: Includes code for commands that directly edit the session
 Author: Brandon Dennis
-Version: 0.2
-Last updated: 10/2/2026
+Version: 0.4
+Last updated: 11/13/2026
 TODO:
 Group commands
 Implement auto complete and suggestions
@@ -30,12 +30,13 @@ class EditSession(commands.Cog):
     async def addPlayer(self, ctx: commands.Context, bracket, name: str):
         # Retrieve session variable and check for valid session.
         if await self.sessionNotFound(ctx): return
+        session = self.bot.sessions[ctx.guild.name]
 
         # Error checking for existing players and non-integer brackets
         try:
             bracket = int(bracket)
-            self.bot.session.addPlayer(bracket - 1, name)
-            await ctx.send(f"Player added to bracket {self.bot.session.getBracket(bracket - 1)}")
+            session.addPlayer(bracket - 1, name)
+            await ctx.send(f"Player added to bracket {session.getBracket(bracket - 1)}")
         # Handle errors gracefully
         except PlayerExistsError as error:
             await ctx.send(error)
@@ -49,6 +50,7 @@ class EditSession(commands.Cog):
     async def bulkAddPlayer(self, ctx: commands.Context, bracket, *args):
         # Retrieve session variable and check for valid session.
         if await self.sessionNotFound(ctx): return
+        session = self.bot.sessions[ctx.guild.name]
         # Error checking for non-integer bracket values
         try:
             bracket = int(bracket)
@@ -63,12 +65,12 @@ class EditSession(commands.Cog):
         for player in args:
             # Add each player, or note the name if the player is already found in the bracket
             try:
-                self.bot.session.addPlayer(bracket - 1, player)
+                session.addPlayer(bracket - 1, player)
                 added += 1
             except PlayerExistsError:
                 dupes += f"{player}, "
         # Create the appropriate feedback message.
-        msg = f"Added {added} players to bracket {self.bot.session.getBracket(bracket - 1)}"
+        msg = f"Added {added} players to bracket {session.getBracket(bracket - 1)}"
         if dupes != "":
             msg += (
                 f"\nThe following players were already found in this bracket: {dupes[:-2]}"
@@ -80,10 +82,10 @@ class EditSession(commands.Cog):
     async def removePlayer(self, ctx: commands.Context, player: str):
         # Retrieve session variable and check for valid session.
         if await self.sessionNotFound(ctx): return
-
+        session = self.bot.sessions[ctx.guild.name]
         # Try to remove player or send feedback if they don't exist
         try:
-            self.bot.session.removePlayer(player)
+            session.removePlayer(player)
             await ctx.send(f"Player {player} removed from the session.")
         except PlayerNotFound as error:
             await ctx.send(error)
@@ -93,12 +95,13 @@ class EditSession(commands.Cog):
     async def changePlayerBracket(self, ctx: commands.Context, bracket: int, player: str):
         # Retrieve session variable and check for valid session.
         if await self.sessionNotFound(ctx): return
+        session = self.bot.sessions[ctx.guild.name]
         # Error checking for non-integer bracket values and redundant changes
         try:
             bracket = int(bracket)
-            self.bot.session.changeBracket(bracket - 1, player)
+            session.changeBracket(bracket - 1, player)
             await ctx.send(
-                f"Changed player {player} to bracket {self.bot.session.getBracket(bracket - 1)}"
+                f"Changed player {player} to bracket {session.getBracket(bracket - 1)}"
             )
         # Handle errors gracefully
         except (ValueError, IndexError):
@@ -107,7 +110,7 @@ class EditSession(commands.Cog):
             )
         except PlayerExistsError:
             await ctx.send(
-                f"Player {player} is already in bracket {self.bot.session.getBracket(bracket - 1)}"
+                f"Player {player} is already in bracket {session.getBracket(bracket - 1)}"
             )
 
     # Creates a group of players in a given bracket
@@ -120,12 +123,13 @@ class EditSession(commands.Cog):
     ):
         # Retrieve session variable and check for valid session.
         if await self.sessionNotFound(ctx): return
+        session = self.bot.sessions[ctx.guild.name]
         # Error checking for non-integer bracket values and players in existing groups
         try:
             bracket = int(bracket)
-            self.bot.session.makeGroup(bracket - 1, args)
+            session.makeGroup(bracket - 1, args)
             await ctx.send(
-                f"Created a group of {len(args)} players in bracket {self.bot.session.getBracket(bracket - 1)}"
+                f"Created a group of {len(args)} players in bracket {session.getBracket(bracket - 1)}"
             )
         # Handle errors gracefully
         except (ValueError, IndexError):
@@ -140,12 +144,12 @@ class EditSession(commands.Cog):
     async def startRound(self, ctx: commands.Context):
         # Retrieve session variable and check for valid session.
         if await self.sessionNotFound(ctx): return
-
+        session = self.bot.sessions[ctx.guild.name]
         # Create a copy of the session in case startup encounters an error
-        backup = copy.deepcopy(self.bot.session)
+        backup = copy.deepcopy(session)
         try:
-            out = self.bot.session.startRound()
-            self.bot.session.setDownstairs(0, False)
+            out = session.startRound()
+            session.setDownstairs(0, False)
             # If the envoronment has a public channel configured, send to that
             public = (
                 self.bot.get_channel(self.bot.environments[ctx.guild.name][1])
@@ -156,11 +160,11 @@ class EditSession(commands.Cog):
                 await public.send(msg)
         except UnderfullBracketError as error:
             # If the round start fails, revert to the backup session
-            self.bot.session = backup
+            session = backup
             await ctx.send(error)
 
-    async def sessionNotFound(self, ctx):
-        if not self.bot.session:
+    async def sessionNotFound(self, ctx: commands.Context):
+        if ctx.guild.name not in self.bot.sessions:
             await ctx.send(
                 "No current active session started. Use `!start` to start a default session or `!Help start` for more information"
             )

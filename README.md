@@ -5,7 +5,7 @@ The Bear Totem Companion is a discord bot meant to assist with seating groups or
 ## Quick links
 
 1. [Motivation](https://github.com/MageOf4Names/BearTotemCompanion#motivation)
-2. [Current Release](https://github.com/MageOf4Names/BearTotemCompanion#current-release-03)
+2. [Current Release](https://github.com/MageOf4Names/BearTotemCompanion#current-release-04)
 3. [Usage](https://github.com/MageOf4Names/BearTotemCompanion#usage)
 4. [Cloning and Running the Project](https://github.com/MageOf4Names/BearTotemCompanion#cloning-and-running-the-project)
 
@@ -18,7 +18,7 @@ This is a discord bot intended to be the companion app for my LGS to help them s
 - **Multiple play brackets**: Bear Totem offers multiple levels of play including categories like "Play to win" and "Play for fun". As such, the bot needs to accomodate multiple play brackets that all sort players automatically.
 - **Grouping**: Some players attend commander nights in groups and like to be sat together. As a result, the bot needs to be able to maintain these groupings.
 
-## Current Release (0.3)
+## Current Release (0.4)
 
 The bot is currently in it's first workable state. While functional, there are some edges to smooth over. As it stands, the currently has the following functionality:
 
@@ -35,6 +35,7 @@ The bot is currently in it's first workable state. While functional, there are s
 - Environment now supports the ability to send placement messages in channels other than the one the command originated in
 - Updated !help commands that dive into optional and required arguments for commands
 - Reduced the likelyhood of players being seated with players they have previously played with.
+- Updated Logic to allow multiple servers to have sessions simultaneously.
 
 ## Future plans
 

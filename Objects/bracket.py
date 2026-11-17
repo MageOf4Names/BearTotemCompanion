@@ -2,8 +2,8 @@
 File: bracket.py
 Brief: Outlines an individual bracket object. Used in the session object later.
 Author: Brandon Dennis
-Version: 0.2
-Last updated: 11/9/2026
+Version: 0.4
+Last updated: 11/13/2026
 TODO:
 Make startRound take a list of integers representing open tables
 """
@@ -133,11 +133,9 @@ class Bracket:
                 soloPod.addPlayer(p)
                 p.seat(threePod, downstairs)
         # Populate all player's have played lists
-        print("pre")
         for pod in self.__pods:
             for player in pod.getPlayers:
                 player.addPlayed(pod.getPlayers)
-        print("post")
 
     # For a particular player, find a suitable pod given their statistics
     def findPod(self, p:Player, threeAvg:int, downAvg:int, groupSize:int) -> tuple[Pod, bool, bool]:

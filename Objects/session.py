@@ -2,8 +2,8 @@
 File: session.py
 Brief: Class outline for a session object used in the Bear Totem Companion Bot
 Author: Brandon Dennis
-Version: 0.2
-Last updated: 8/18/2026
+Version: 0.4
+Last updated: 11/13/2026
 TODO:
 Remove the necessity of the bracket parameter in group:
     Search each bracket for group members and add new players if all remaining players are in a group
@@ -102,7 +102,9 @@ class Session:
             brList = self.__brackets
 
         # Format a message for the given bracket(s)
-        out = f"Total player count: {len(self.__players)}"
+        out = ""
+        if len(brList) > 1:
+            out += f"Total player count: {len(self.__players)}\n"
         for brk in brList:
             out += f"Player count for bracket **{brk.name}**: **{len(brk.getPlayers)}**\n"
         return out
