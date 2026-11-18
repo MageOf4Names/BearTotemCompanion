@@ -35,7 +35,7 @@ DEV_GUILD, DEV_PERM, DEV_PUB_CHANNEL = DEV_ENV.split(",")
 BT_ENV = os.getenv("BT_GUILD")
 BT_GUILD, BT_PERM, BT_PUB_CHANNEL = BT_ENV.split(",")
 # Test Variables
-#"""
+"""
 TOKEN = os.getenv("TEST_TOKEN")
 TEST_ENV = os.getenv("TEST_GUILD")
 DEV_GUILD, DEV_PERM, DEV_PUB_CHANNEL = TEST_ENV.split(",")
