@@ -3,13 +3,14 @@ File: session_cog.py
 Brief: Includes code for starting and stopping sessions
 Author: Brandon Dennis
 Version: 0.4
-Last updated: 11/13/2026
+Last updated: 11/20/2026
 TODO:
 Group commands
 Implement auto complete and suggestions
 """
 
 # discord.py specific imports
+from discord import app_commands, Interaction
 from discord.ext import commands
 
 # Other imports from the project folders
@@ -22,7 +23,10 @@ class SessionCommands(commands.Cog):
         self.bot: BTCBot = bot
 
     # Starts a blank session using default value if none were given
-    @commands.command(name="start")
+    @commands.hybrid_command(name="start")
+    @app_commands.describe(
+        name="The name of the session", tables="The number of available tables"
+    )
     async def startSession(
         self,
         ctx: commands.Context,
@@ -41,14 +45,16 @@ class SessionCommands(commands.Cog):
         # No session was found, create a session and give feedback
         if ctx.guild.name not in self.bot.sessions:
             self.bot.sessions[ctx.guild.name] = Session(tables, name)
-            await ctx.send(f"Created session with name: {self.bot.sessions[ctx.guild.name].name}")
+            await ctx.send(
+                f"Created session with name: {self.bot.sessions[ctx.guild.name].name}"
+            )
         # Current session found, send a feedback message
         else:
             await ctx.send(
                 f"Session `{self.bot.sessions[ctx.guild.name].name}` already in progress. Please end the current session before starting a new one."
             )
 
-    @commands.command(name="end")
+    @commands.hybrid_command(name="end")
     async def endSession(self, ctx: commands.Context):
         # Retrieve session variable and check for valid session.
         if ctx.guild.name in self.bot.sessions:

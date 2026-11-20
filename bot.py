@@ -3,10 +3,11 @@ File: bot.py
 Brief: Core code for the Bear Totem Companion bot
 Author: Brandon Dennis
 Version: 0.4
-Last updated: 11/9/2026
+Last updated: 11/20/2026
 TODO:
 Implement error handler
 Implement auto complete and suggestions
+Switch to slash commands
 """
 
 # base python imports
@@ -14,9 +15,10 @@ import asyncio
 import os
 import copy
 import time
+import discord
 
 # discord.py specific imports
-from discord import app_commands, Intents, CustomActivity
+from discord import app_commands, Intents, CustomActivity, Interaction
 from discord.ext import commands
 from discord.ext.commands.bot import _default
 from discord.utils import MISSING
@@ -35,11 +37,11 @@ DEV_GUILD, DEV_PERM, DEV_PUB_CHANNEL = DEV_ENV.split(",")
 BT_ENV = os.getenv("BT_GUILD")
 BT_GUILD, BT_PERM, BT_PUB_CHANNEL = BT_ENV.split(",")
 # Test Variables
-#"""
+# """
 TOKEN = os.getenv("TEST_TOKEN")
 TEST_ENV = os.getenv("TEST_GUILD")
 DEV_GUILD, DEV_PERM, DEV_PUB_CHANNEL = TEST_ENV.split(",")
-#"""
+# """
 ENVIRONMENTS = {
     DEV_GUILD: [DEV_PERM, int(DEV_PUB_CHANNEL)],
     BT_GUILD: [BT_PERM, int(BT_PUB_CHANNEL)]
@@ -51,7 +53,6 @@ class BTCBot(commands.Bot):
         super().__init__(command_prefix, help_command=help_command, tree_cls=tree_cls, description=description, allowed_contexts=allowed_contexts, allowed_installs=allowed_installs, intents=intents, **options)
         self.sessions:dict[str, Session] = {}
         self.environments = ENVIRONMENTS
-
 
 intents = Intents.none()
 intents.message_content = True
@@ -100,6 +101,16 @@ async def permitCheck(ctx:commands.Context):
     if not permit:
         await ctx.send("Looks like you don't have permission to use me here!")
     return permit
+
+
+@btc.command(name="sync")
+async def sync_command(ctx:commands.Context):
+    if ctx.author.guild_permissions.administrator:
+        btc.tree.copy_global_to(guild=ctx.guild)
+        cmdList = await btc.tree.sync(guild=ctx.guild)
+        await ctx.send(f"Synced {[cmd.name for cmd in cmdList]} commands to the server.")
+    else:
+        ctx.send("You do not have permission to use this command.")
 
 # Login to Discord
 async def login() -> None:
