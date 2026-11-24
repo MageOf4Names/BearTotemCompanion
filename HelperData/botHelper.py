@@ -59,12 +59,12 @@ commandList = {
     "add": add,
     "addBulk": blkAdd,
     "remove": rm,
-    "changeBracket": change,
+    "change": change,
     "group": group,
-    "playerCount": pCount,
-    "playerList": pList,
-    "groupList": gList,
-    "listBrackets": brkList,
-    "startRound": startRound,
+    "player-count": pCount,
+    "player-list": pList,
+    "group-list": gList,
+    "list-brackets": brkList,
+    "start-round": startRound,
     "end": end
 }

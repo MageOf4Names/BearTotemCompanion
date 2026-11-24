@@ -10,12 +10,19 @@ Implement auto complete and suggestions
 """
 
 # discord.py specific imports
+from discord import app_commands
+from discord.app_commands import Choice
 from discord.ext import commands
 
 # Other imports from the project folders
 from HelperData.exceptions import *
 from bot import BTCBot
 
+bracket_options = [
+    Choice(name="Play to Win", value=1),
+    Choice(name="Super Casual", value=2),
+    Choice(name="Play for Fun", value=3),
+]
 
 # Defines a cog for interacting with the entire session
 class ViewSession(commands.Cog):
@@ -23,7 +30,9 @@ class ViewSession(commands.Cog):
         self.bot: BTCBot = bot
 
     # Sends a message with the player count in one or all brackets
-    @commands.command(name="playerCount")
+    @commands.hybrid_command(name="player-count")
+    @app_commands.describe(bracket="Get a player count for a particular bracket")
+    @app_commands.choices(bracket=bracket_options)
     async def playerCount(self, ctx: commands.Context, bracket: int | None = None):
         # Retrieve session variable and check for valid session.
         if await self.sessionNotFound(ctx): return
@@ -41,7 +50,9 @@ class ViewSession(commands.Cog):
             )
 
     # Sends a message with a list of players in one or all brackets
-    @commands.command(name="playerList")
+    @commands.hybrid_command(name="player-list")
+    @app_commands.describe(bracket="List players for a particular bracket")
+    @app_commands.choices(bracket=bracket_options)
     async def playerList(self, ctx: commands.Context, bracket: int | None = None):
         # Retrieve session variable and check for valid session.
         if await self.sessionNotFound(ctx): return
@@ -59,7 +70,9 @@ class ViewSession(commands.Cog):
             )
 
     # Sends a message with a list of players in one or all brackets
-    @commands.command(name="groupList")
+    @commands.hybrid_command(name="group-list")
+    @app_commands.describe(bracket="List groups for a particular bracket")
+    @app_commands.choices(bracket=bracket_options)
     async def groupList(
         self, 
         ctx: commands.Context,
@@ -81,7 +94,7 @@ class ViewSession(commands.Cog):
             )
 
     # Sends a message with all current brackets and their indexes
-    @commands.command(name="listBrackets")
+    @commands.hybrid_command(name="list-brackets")
     async def listBrackets(self, ctx: commands.Context):
         # Retrieve session variable and check for valid session.
         if await self.sessionNotFound(ctx): return

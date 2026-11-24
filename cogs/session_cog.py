@@ -10,7 +10,8 @@ Implement auto complete and suggestions
 """
 
 # discord.py specific imports
-from discord import app_commands, Interaction
+from discord import app_commands
+from discord.app_commands import Choice
 from discord.ext import commands
 
 # Other imports from the project folders
@@ -27,6 +28,7 @@ class SessionCommands(commands.Cog):
     @app_commands.describe(
         name="The name of the session", tables="The number of available tables"
     )
+    @app_commands.choices(tables=[Choice(name=i, value=i) for i in range(1, 10)])
     async def startSession(
         self,
         ctx: commands.Context,

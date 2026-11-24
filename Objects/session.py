@@ -3,7 +3,7 @@ File: session.py
 Brief: Class outline for a session object used in the Bear Totem Companion Bot
 Author: Brandon Dennis
 Version: 0.4
-Last updated: 11/13/2026
+Last updated: 11/23/2026
 TODO:
 Remove the necessity of the bracket parameter in group:
     Search each bracket for group members and add new players if all remaining players are in a group
@@ -39,6 +39,10 @@ class Session:
     # Returns the name of a specific bracket.
     def getBracket(self, br:int) -> str:
         return self.__brackets[br].name
+
+    # Accessor for the brackets varaible
+    def getBrackets(self) -> list[Bracket]:
+        return self.__brackets
 
     # Sets the number of tables available in the main area.
     def setTableCount(self, num:int):

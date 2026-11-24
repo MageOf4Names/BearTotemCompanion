@@ -13,12 +13,20 @@ Implement auto complete and suggestions
 import copy
 
 # discord.py specific imports
+from discord import app_commands, Interaction
+from discord.app_commands import Choice
 from discord.ext import commands
 
 # Other imports from the project folders
 from HelperData.exceptions import *
 from bot import BTCBot
+from Objects.bracket import Bracket
 
+bracket_options = [
+    Choice(name="Play to Win", value=1),
+    Choice(name="Super Casual", value=2),
+    Choice(name="Play for Fun", value=3),
+]
 
 # Defines a cog for interacting with the entire session
 class EditSession(commands.Cog):
@@ -26,8 +34,13 @@ class EditSession(commands.Cog):
         self.bot: BTCBot = bot
 
     # Adds a player to a specified bracket
-    @commands.command(name="add")
-    async def addPlayer(self, ctx: commands.Context, bracket, name: str):
+    @commands.hybrid_command(name="add")
+    @app_commands.describe(
+        bracket="Which bracket you would like to add this player to?",
+        name="The name of the player being added",
+    )
+    @app_commands.choices(bracket=bracket_options)
+    async def addPlayer(self, ctx: commands.Context, bracket:int, name: str):
         # Retrieve session variable and check for valid session.
         if await self.sessionNotFound(ctx): return
         session = self.bot.sessions[ctx.guild.name]
@@ -36,7 +49,7 @@ class EditSession(commands.Cog):
         try:
             bracket = int(bracket)
             session.addPlayer(bracket - 1, name)
-            await ctx.send(f"Player added to bracket {session.getBracket(bracket - 1)}")
+            await ctx.send(f"{name} added to bracket {session.getBracket(bracket - 1)}")
         # Handle errors gracefully
         except PlayerExistsError as error:
             await ctx.send(error)
@@ -91,7 +104,12 @@ class EditSession(commands.Cog):
             await ctx.send(error)
 
     # Changes the bracket of a player to the specified bracket
-    @commands.command(name="changeBracket")
+    @commands.hybrid_command(name="change")
+    @app_commands.describe(
+        bracket="The bracket you're moving this player to",
+        player="The name of the player"
+    )
+    @app_commands.choices(bracket=bracket_options)
     async def changePlayerBracket(self, ctx: commands.Context, bracket: int, player: str):
         # Retrieve session variable and check for valid session.
         if await self.sessionNotFound(ctx): return
@@ -140,7 +158,7 @@ class EditSession(commands.Cog):
             await ctx.send(error)
 
     # Starts a round and seats all players in all brackets
-    @commands.command(name="startRound")
+    @commands.hybrid_command(name="start-round")
     async def startRound(self, ctx: commands.Context):
         # Retrieve session variable and check for valid session.
         if await self.sessionNotFound(ctx): return
