@@ -55,16 +55,16 @@ end = Command(
 )
 
 commandList = {
-    "start": start,
+    "session-start": start,
     "add": add,
-    "addBulk": blkAdd,
+    "bulk": blkAdd,
     "remove": rm,
     "change": change,
     "group": group,
-    "player-count": pCount,
-    "player-list": pList,
-    "group-list": gList,
-    "list-brackets": brkList,
-    "start-round": startRound,
-    "end": end
+    "counts": pCount,
+    "players": pList,
+    "groups": gList,
+    "brackets": brkList,
+    "start": startRound,
+    "session-end": end
 }

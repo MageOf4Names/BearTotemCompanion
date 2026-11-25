@@ -3,10 +3,9 @@ File: session_cog.py
 Brief: Includes code for starting and stopping sessions
 Author: Brandon Dennis
 Version: 0.4
-Last updated: 11/20/2026
+Last updated: 11/24/2026
 TODO:
 Group commands
-Implement auto complete and suggestions
 """
 
 # discord.py specific imports
@@ -24,7 +23,7 @@ class SessionCommands(commands.Cog):
         self.bot: BTCBot = bot
 
     # Starts a blank session using default value if none were given
-    @commands.hybrid_command(name="start")
+    @commands.hybrid_command(name="session-start")
     @app_commands.describe(
         name="The name of the session", tables="The number of available tables"
     )
@@ -56,7 +55,7 @@ class SessionCommands(commands.Cog):
                 f"Session `{self.bot.sessions[ctx.guild.name].name}` already in progress. Please end the current session before starting a new one."
             )
 
-    @commands.hybrid_command(name="end")
+    @commands.hybrid_command(name="session-end")
     async def endSession(self, ctx: commands.Context):
         # Retrieve session variable and check for valid session.
         if ctx.guild.name in self.bot.sessions:

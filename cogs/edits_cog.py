@@ -3,10 +3,9 @@ File: edits_cog.py
 Brief: Includes code for commands that directly edit the session
 Author: Brandon Dennis
 Version: 0.4
-Last updated: 11/13/2026
+Last updated: 11/24/2026
 TODO:
 Group commands
-Implement auto complete and suggestions
 """
 
 # general imports
@@ -19,14 +18,8 @@ from discord.ext import commands
 
 # Other imports from the project folders
 from HelperData.exceptions import *
-from bot import BTCBot
-from Objects.bracket import Bracket
+from bot import BTCBot, bracket_autocomplete
 
-bracket_options = [
-    Choice(name="Play to Win", value=1),
-    Choice(name="Super Casual", value=2),
-    Choice(name="Play for Fun", value=3),
-]
 
 # Defines a cog for interacting with the entire session
 class EditSession(commands.Cog):
@@ -39,7 +32,7 @@ class EditSession(commands.Cog):
         bracket="Which bracket you would like to add this player to?",
         name="The name of the player being added",
     )
-    @app_commands.choices(bracket=bracket_options)
+    @app_commands.autocomplete(bracket=bracket_autocomplete)
     async def addPlayer(self, ctx: commands.Context, bracket:int, name: str):
         # Retrieve session variable and check for valid session.
         if await self.sessionNotFound(ctx): return
@@ -59,7 +52,7 @@ class EditSession(commands.Cog):
             )
 
     # Adds a list of players in bulk to a specified bracket.
-    @commands.command(name="addBulk")
+    @commands.command(name="bulk")
     async def bulkAddPlayer(self, ctx: commands.Context, bracket, *args):
         # Retrieve session variable and check for valid session.
         if await self.sessionNotFound(ctx): return
@@ -90,8 +83,16 @@ class EditSession(commands.Cog):
             )
         await ctx.send(msg)
 
+    # Slash command shell for bulkAddPlayer
+    @app_commands.command(name="bulk")
+    @app_commands.autocomplete(bracket=bracket_autocomplete)
+    async def slashBulk(self, inter: Interaction, bracket:int, players: str):
+        ctx = await self.bot.get_context(inter)
+        await self.bulkAddPlayer(ctx, bracket, *players.split(" "))
+
     # Removes a player with a given name from the session
-    @commands.command(name="remove")
+    @commands.hybrid_command(name="remove")
+    @app_commands.describe(player="The name of the player you would like to remove.")
     async def removePlayer(self, ctx: commands.Context, player: str):
         # Retrieve session variable and check for valid session.
         if await self.sessionNotFound(ctx): return
@@ -109,7 +110,7 @@ class EditSession(commands.Cog):
         bracket="The bracket you're moving this player to",
         player="The name of the player"
     )
-    @app_commands.choices(bracket=bracket_options)
+    @app_commands.autocomplete(bracket=bracket_autocomplete)
     async def changePlayerBracket(self, ctx: commands.Context, bracket: int, player: str):
         # Retrieve session variable and check for valid session.
         if await self.sessionNotFound(ctx): return
@@ -157,8 +158,15 @@ class EditSession(commands.Cog):
         except PlayerAlreadyGroupedError as error:
             await ctx.send(error)
 
+    # Slash command wrapper for groupPlayers
+    @app_commands.command(name="group")
+    @app_commands.autocomplete(bracket=bracket_autocomplete)
+    async def slashGroup(self, inter:Interaction, bracket:int, players:str):
+        ctx = await self.bot.get_context(inter)
+        await self.groupPlayers(ctx, bracket, *players.split(" "))
+
     # Starts a round and seats all players in all brackets
-    @commands.hybrid_command(name="start-round")
+    @commands.hybrid_command(name="start")
     async def startRound(self, ctx: commands.Context):
         # Retrieve session variable and check for valid session.
         if await self.sessionNotFound(ctx): return

@@ -57,29 +57,31 @@ These are features that don't necessarily fit the specific use-case for this pro
 
 ## Usage
 
-### start
+Commands can be initiated either through the prefix `!`, or by using slash commands. To use slash commands, replace the `!` in the command call with a forward slash (`/`)
 
-__Description:__ Creates a new session with a given name and number of tables.
+### session-start
 
-__Usage:__ `!start {event_name} {number_of_tables}`
+**Description:** Creates a new session with a given name and number of tables.
+
+**Usage:** `!session-start {event_name} {number_of_tables}`
 
 - event_name *(optional)*: The name of the session (event code, event name, etc.).
 - number_of_tables *(optional)*: The number of tables available in the main seating area.
 
 ### add
 
-__Description:__ Adds a player with a given name to a specified bracket.
+**Description:** Adds a player with a given name to a specified bracket.
 
-__Usage:__ `!add [bracket] [name]`
+**Usage:** `!add [bracket] [name]`
 
 - bracket: The bracket you want the player added to.
 - The name of the player being added.
 
-### addBulk
+### bulk
 
-__Description:__ Adds multiple players to the same bracket.
+**Description:** Adds multiple players to the same bracket.
 
-__Usage:__ `!addBulk [bracket] [player 1] {player 2} ...`
+**Usage:** `!bulk [bracket] [player 1] {player 2} ...`
 
 - bracket: The bracket you want to add players to.
 - player 1: The name of the first player added.
@@ -87,72 +89,72 @@ __Usage:__ `!addBulk [bracket] [player 1] {player 2} ...`
 
 ### remove
 
-__Description:__ Removes a player from the session regardless of bracket.
+**Description:** Removes a player from the session regardless of bracket.
 
-__Usage:__ `!remove [name]`
+**Usage:** `!remove [name]`
 
 - name: The name of the player being removed.
 
-### changeBracket
+### change
 
-__Description:__ Changes the bracket of a given player.
+**Description:** Changes the bracket of a given player.
 
-__Usage:__ `!changeBracket [new bracket] [player]`
+**Usage:** `!change [new bracket] [player]`
 
 - new bracket: The bracket the player is being moved to.
 - player: The name of the player being moved.
 
 ### group
 
-__Description:__ Creates a group of players in the same bracket (will create new players if they aren't already there).
+**Description:** Creates a group of players in the same bracket (will create new players if they aren't already there).
 
-__Usage:__ `!group [bracket] [player 1] [player 2] {player 3} {player 4}`
+**Usage:** `!group [bracket] [player 1] [player 2] {player 3} {player 4}`
 
 - bracket: The bracket the group is being made in.
 - players 1 & 2: Player names. Each group must include at least 2 players.
 - players 3 & 4 *(optional)*: Additional player names.
 
-### playerCount
+### counts
 
-__Description:__ Gives a count of players in a given bracket (or all brackets if none is specified).
+**Description:** Gives a count of players in a given bracket (or all brackets if none is specified).
 
-__Usage:__ `!playerCount {bracket}`
+**Usage:** `!counts {bracket}`
 
 - bracket *(optional)*: The bracket a count is required for. Leave blank for all brackets.
 
-### playerList
+### players
 
-__Description:__ Lists all current players in a given bracket (or all brackets if none is specified).
+**Description:** Lists all current players in a given bracket (or all brackets if none is specified).
 
-__Usage:__ `!playerList {bracket}`
+**Usage:** `!players {bracket}`
 
 - bracket *(optional)*: The bracket a player list is required for. Leave blank for all brackets.
 
-### groupList
+### groups
 
-__Description:__ Lists all current groups in a given bracket (or all brackets if none is specified).
+**Description:** Lists all current groups in a given bracket (or all brackets if none is specified).
 
-__Usage:__ `!groupList {bracket}`
+**Usage:** `!groups {bracket}`
 
 - bracket *(optional)*: The bracket a group list is required for. Leave blank for all brackets.
 
-### listBrackets
+### brackets
 
-__Description:__ Lists the names and indexes of all brackets.
+**Description:** Lists the names and indexes of all brackets.
 
-__Usage:__ `!listBrackets`
+**Usage:** `!brackets`
 
-### startRound
+### start
 
-__Description:__ Starts a new round of pods and lists the table arrangements.
+**Description:** Starts a new round of pods and lists the table arrangements.
 
-__Usage:__ `!startRound`
+**Usage:** `!start`
 
-### end
+### session-end
 
-__Description:__ Ends the current session, removing all current players and brackets.
+**Description:** Ends the current session, removing all current players and brackets.
 
-__Usage:__ `!end`
+**Usage:** `!session-end`
 
 ## Cloning and Running the Project
 

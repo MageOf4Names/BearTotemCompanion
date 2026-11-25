@@ -3,11 +3,9 @@ File: bot.py
 Brief: Core code for the Bear Totem Companion bot
 Author: Brandon Dennis
 Version: 0.4
-Last updated: 11/20/2026
+Last updated: 11/24/2026
 TODO:
 Implement error handler
-Implement auto complete and suggestions
-Switch to slash commands
 """
 
 # base python imports
@@ -19,6 +17,7 @@ import discord
 
 # discord.py specific imports
 from discord import app_commands, Intents, CustomActivity, Interaction
+from discord.app_commands import Choice
 from discord.ext import commands
 from discord.ext.commands.bot import _default
 from discord.utils import MISSING
@@ -29,6 +28,7 @@ from HelperData.botHelper import *
 from HelperData.exceptions import *
 from HelperData.helpCommand import BTCHelp
 from Objects.session import Session
+from Objects.bracket import Bracket
 
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
@@ -59,6 +59,14 @@ intents.message_content = True
 intents.messages = True
 intents.guilds = True
 btc = BTCBot(command_prefix="!", intents=intents, activity=CustomActivity(name="Type !help for the command menu."), help_command=BTCHelp())
+
+
+async def bracket_autocomplete(inter: Interaction, current: str) -> list[Choice[int]]:
+    bot: BTCBot = inter.client
+    guild: str = inter.guild.name
+    brackets: list[Bracket] = bot.sessions[guild].getBrackets()
+    return [Choice(name=brackets[i].name, value=i + 1) for i in range(len(brackets))]
+
 
 @btc.event
 async def on_error(event, *args, **kwargs):
